@@ -1,0 +1,866 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #fafafa;
+  --bg2: #f2f2f2;
+  --surface: #ffffff;
+  --surface-r: 255;
+  --surface-g: 255;
+  --surface-b: 255;
+  --border: #e0e0e0;
+  --accent: #b80019;
+  --accent2: #8a0012;
+  --accent-r: 184;
+  --accent-g: 0;
+  --accent-b: 25;
+  --text: #1a1a1a;
+  --text-r: 26;
+  --text-g: 26;
+  --text-b: 26;
+  --muted: #666666;
+  --white: #111111;
+  --available: #16a34a;
+  --available-r: 22;
+  --available-g: 163;
+  --available-b: 74;
+  --hover-bg: #fff5f5;
+  --shadow: rgb(0 0 0 / 0.06);
+  --shadow-accent: rgb(184 0 25 / 0.06);
+  --glow-opacity: 0.06;
+  --radius: 8px;
+  --radius-lg: 10px;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', sans-serif;
+  --jp: 'Noto Sans JP', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent2);
+}
+
+/* CURSOR GLOW */
+.cursor-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--accent-r), var(--accent-g), var(--accent-b), var(--glow-opacity)) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+
+.lang-btn {
+  padding: 7px 14px;
+  cursor: pointer;
+  color: var(--muted);
+  border: none;
+  background: transparent;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.lang-btn.active {
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* LAYOUT */
+.layout {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-block: 0;
+  padding-inline: 0px;
+  /* Reduced from 48px to allow sidebar to shift left */
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 40%;
+  /* Slightly wider to match 1200px box correctly */
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 88px 0;
+  padding-inline-start: 48px;
+  /* Restore padding left only for sidebar content */
+  z-index: 10;
+}
+
+.name {
+  font-family: var(--sans);
+  font-size: clamp(38px, 4vw, 54px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.05;
+  margin-bottom: 12px;
+}
+
+.name-jp {
+  display: block;
+  font-family: var(--jp);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--accent);
+  letter-spacing: 4px;
+  margin-top: 8px;
+}
+
+/* Highlighted / Bold text in paragraphs */
+strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.tagline {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.bio {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+/* NAV */
+.nav {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Vertically centering in viewport */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* We need to clear position absolute animation transform conflict */
+@keyframes navFade {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-50% + 20px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 0;
+  text-decoration: none;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-item::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--border);
+  transition: width 0.35s, background 0.2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: var(--white);
+}
+
+.nav-item:hover::before,
+.nav-item.active::before {
+  width: 64px;
+  background: var(--accent);
+}
+
+/* SOCIALS AND SETTINGS */
+.sidebar-footer {
+  margin-top: 40px;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+
+
+.social-link {
+  color: var(--muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.social-link:hover {
+  color: var(--accent);
+}
+
+.social-link svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* FOCUS STATES — Accessibility */
+.nav-item:focus,
+.social-link:focus,
+.theme-dot:focus,
+.lang-btn:focus,
+.project-card:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.nav-item:focus:not(:focus-visible),
+.social-link:focus:not(:focus-visible),
+.theme-dot:focus:not(:focus-visible),
+.lang-btn:focus:not(:focus-visible),
+.project-card:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* CONTENT */
+.content {
+  width: 60%;
+  padding-block: 88px;
+  padding-inline-start: 68px;
+  padding-inline-end: 0;
+}
+
+section {
+  margin-bottom: 80px;
+  scroll-margin-top: 88px;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0;
+  display: none;
+}
+
+/* ABOUT */
+.about-text {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 640px;
+  /* Increased to allow flowing into new layout width while maintaining readability */
+  margin-bottom: 16px;
+  padding-inline-start: 24px;
+}
+
+.about-text a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.about-text a:hover {
+  text-decoration: underline;
+}
+
+/* ABOUT SKILLS */
+.about-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+  padding-inline-start: 24px;
+}
+
+/* UNIFIED TAG */
+.tag {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.06);
+  border: 1px solid rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
+  border-radius: 20px;
+  padding: 3px 11px;
+  display: inline-block;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.tag:hover {
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
+  border-color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.25);
+}
+
+/* EXPERIENCE */
+.exp-item {
+  display: grid;
+  grid-template-columns: minmax(120px, 25%) 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 24px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition: background 0.3s, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.exp-item:hover {
+  background: var(--hover-bg);
+  border-color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
+}
+
+.exp-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  padding-top: 4px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.exp-body {
+  position: relative;
+}
+
+.exp-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.exp-company {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.exp-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.exp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* PROJECTS */
+.projects-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.project-card {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-decoration: none;
+  display: block;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.project-card:hover {
+  background: var(--hover-bg);
+  border-color: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
+  transform: translateX(4px);
+}
+
+.project-arrow {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--muted);
+  margin-inline-start: 6px;
+  transition: color 0.2s, transform 0.2s;
+  vertical-align: middle;
+}
+
+.project-card:hover .project-arrow {
+  color: var(--accent);
+  transform: translate(3px, -3px);
+}
+
+.project-header {
+  margin-block-end: 10px;
+}
+
+.project-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white);
+  display: inline;
+}
+
+.project-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  max-width: 640px;
+  /* Increased to allow text to expand */
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+
+
+/* (Animasi fadeUp & reveal dihapus sesuai prinsip UX instan) */
+
+/* LANG (Language switching with fade transition) */
+.en-only,
+.jp-only {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+[data-lang="en"] .jp-only {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+[data-lang="jp"] .en-only {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+[data-lang="en"] .en-only,
+[data-lang="jp"] .jp-only {
+  animation: langFadeIn 0.4s ease forwards;
+}
+
+@keyframes langFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* RESPONSIVE — Tablet */
+@media (max-width: 1024px) {
+  .layout {
+    padding-inline: 32px;
+  }
+
+  .sidebar {
+    width: 300px;
+    min-width: 300px;
+    padding-block: 72px;
+  }
+
+  .content {
+    padding-block: 72px;
+    padding-inline-start: 48px;
+    padding-inline-end: 0;
+  }
+}
+
+/* RESPONSIVE — Mobile */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    padding-inline: 20px;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    min-width: unset;
+    height: auto;
+    padding-block-start: 80px;
+    padding-block-end: 32px;
+  }
+
+  .name {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+
+  .bio {
+    max-width: 100%;
+  }
+
+  /* Nav — hidden on mobile */
+  .nav {
+    display: none;
+  }
+
+  .socials {
+    margin-top: 24px;
+  }
+
+  .content {
+    padding-block-start: 32px;
+    padding-block-end: 64px;
+    padding-inline: 0;
+  }
+
+  section {
+    margin-block-end: 56px;
+  }
+
+  /* Section label — show on mobile as sticky */
+  .section-label {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding-block: 12px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Experience — stack tanggal di atas */
+  .exp-item {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px;
+  }
+
+  .exp-date {
+    padding-block-start: 0;
+    font-size: 12px;
+  }
+
+  /* Section label */
+}
+
+/* RESPONSIVE — Small mobile */
+@media (max-width: 400px) {
+  .layout {
+    padding-inline: 16px;
+  }
+
+  .name {
+    font-size: 30px;
+  }
+}
+
+/* DARK MODE — Fern (葬送のフリーレン) */
+[data-theme="dark"] {
+  --bg: #0d0b14;
+  --bg2: #13101e;
+  --surface: #161222;
+  --surface-r: 22;
+  --surface-g: 18;
+  --surface-b: 34;
+  --border: #2a2040;
+  --accent: #9d7fe0;
+  --accent2: #7c5cbf;
+  --accent-r: 157;
+  --accent-g: 127;
+  --accent-b: 224;
+  --text: #e8e4f0;
+  --text-r: 232;
+  --text-g: 228;
+  --text-b: 240;
+  --muted: #8b7aa8;
+  --white: #f0ecff;
+  --available: #22c55e;
+  --available-r: 34;
+  --available-g: 197;
+  --available-b: 86;
+  --hover-bg: #1a1528;
+  --shadow: rgb(0 0 0 / 0.12);
+  --shadow-accent: rgb(157 127 224 / 0.1);
+  --glow-opacity: 0.12;
+}
+
+
+/* Removed subtle accent on hover for Name elements */
+
+/* HIMMEL THEME — Royal Blue */
+[data-theme="himmel"] {
+  --bg: #f4f7fc;
+  --bg2: #e8eef7;
+  --surface: #ffffff;
+  --surface-r: 255;
+  --surface-g: 255;
+  --surface-b: 255;
+  --border: #c8d8ed;
+  --accent: #4a7eb5;
+  --accent2: #3a6499;
+  --accent-r: 74;
+  --accent-g: 126;
+  --accent-b: 181;
+  --text: #1a2535;
+  --text-r: 26;
+  --text-g: 37;
+  --text-b: 53;
+  --muted: #5a7a99;
+  --white: #0f1e30;
+  --available: #16a34a;
+  --available-r: 22;
+  --available-g: 163;
+  --available-b: 74;
+  --hover-bg: #eaf0f9;
+  --shadow: rgb(0 0 0 / 0.06);
+  --shadow-accent: rgb(74 126 181 / 0.08);
+  --glow-opacity: 0.08;
+}
+
+/* FRIEREN THEME — Ancient Elf */
+[data-theme="frieren"] {
+  --bg: #ffffff;
+  --bg2: #f4f5f6;
+  --surface: #fafafa;
+  --surface-r: 250;
+  --surface-g: 250;
+  --surface-b: 250;
+  --surface-alt: #ffffff;
+  --border: #c8d0d4;
+  --accent: #3d8a7a;
+  --accent2: #2d7a6a;
+  --accent-r: 61;
+  --accent-g: 138;
+  --accent-b: 122;
+  --text: #1a1e20;
+  --text-r: 26;
+  --text-g: 30;
+  --text-b: 32;
+  --muted: #686e72;
+  --white: #0e1618;
+  --available: #3d8a7a;
+  --available-r: 61;
+  --available-g: 138;
+  --available-b: 122;
+  --hover-bg: #f0f4f3;
+  --shadow: rgb(0 0 0 / 0.06);
+  --shadow-accent: rgb(61 138 122 / 0.1);
+  --glow-opacity: 0.07;
+}
+
+/* Frieren — subtle card adjustments */
+[data-theme="frieren"] .exp-item:hover,
+[data-theme="frieren"] .project-card:hover {
+  background: var(--bg2);
+}
+
+[data-theme="frieren"] .tag {
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.06);
+  color: var(--text);
+}
+
+[data-theme="frieren"] .tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
+/* THEME DOTS - Expandable Free Floating */
+.theme-dots {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  /* Align right to keep the active dot pinned to the corner */
+  padding: 0;
+  /* Remove padding to fix hover box */
+  z-index: 100;
+  height: 24px;
+  /* Just enough to contain the shadow */
+  gap: 0;
+}
+
+.theme-dot {
+  width: 0;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: #cccccc;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-dot.active {
+  width: 18px;
+  margin: 0;
+  opacity: 1;
+  background: var(--dot-color) !important;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 0 0 3px var(--dot-color), 0 2px 8px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+}
+
+/* HOVER STATE: Expand */
+.theme-dots:hover .theme-dot,
+.theme-dots:focus-within .theme-dot {
+  width: 18px;
+  margin-left: 12px;
+  /* Add space ONLY when expanded */
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* Maintain active styling inside hover */
+.theme-dots:hover .theme-dot.active,
+.theme-dots:focus-within .theme-dot.active {
+  transform: scale(1.1);
+  margin-left: 12px;
+}
+
+/* Hover effect for individual dots when expanded */
+.theme-dots:hover .theme-dot,
+.theme-dots:focus-within .theme-dot {
+  background: var(--dot-color);
+}
+
+.theme-dots:hover .theme-dot:hover,
+.theme-dots:focus-within .theme-dot:hover {
+  background: var(--dot-color) !important;
+  transform: scale(1.15);
+}
+
+/* LANG TOGGLE - Inline Sidebar */
+.lang-toggle {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.lang-btn {
+  padding: 7px 14px;
+  cursor: pointer;
+  color: var(--muted);
+  border: none;
+  background: transparent;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.lang-btn.active {
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .theme-dots {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px;
+    height: 28px;
+  }
+
+  .theme-dot {
+    height: 12px;
+  }
+
+  .theme-dot.active {
+    width: 12px;
+    margin: 0 4px;
+  }
+
+  .theme-dots:hover .theme-dot,
+  .theme-dots:focus-within .theme-dot {
+    width: 12px;
+    margin: 0 5px;
+  }
+}
+
+/* REDUCED MOTION — Ditangani native OS */

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Ismail Fatih Raihan - Web Developer & Informatics Student, seeking opportunities in Japan" />
+  <meta property="og:title" content="Ismail Fatih Raihan — Developer" />
+  <meta property="og:description" content="Web Developer passionate about building clean, useful applications" />
+  <meta property="og:type" content="website" />
+  <title>Ismail Fatih Raihan — Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+
+
+
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <a href="#" style="text-decoration: none;">
+          <h1 class="name">
+            Ismail Fatih
+            <span class="name-jp">イスマイル・ファティ</span>
+          </h1>
+        </a>
+        <p class="tagline en-only reveal">Software Engineer</p>
+        <p class="tagline jp-only reveal" style="font-family:var(--jp);">ソフトウェアエンジニア
+        </p>
+
+        <p class="bio en-only reveal">Interested in web development, AI, and data science.</p>
+        <p class="bio jp-only reveal" style="font-family:var(--jp);">
+          ウェブ開発、人工知能、データサイエンスに興味があります。</p>
+
+      </div>
+
+      <!-- Let's pull out the nav from the inner div so it can be absolute positioned relative to sidebar correctly -->
+      <nav class="nav">
+        <a class="nav-item active" href="#about">
+          <span class="en-only">About</span><span class="jp-only">自己紹介</span>
+        </a>
+        <a class="nav-item" href="#experience">
+          <span class="en-only">Experience</span><span class="jp-only">経歴</span>
+        </a>
+        <a class="nav-item" href="#projects">
+          <span class="en-only">Projects</span><span class="jp-only">プロジェクト</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="socials">
+          <!-- GitHub -->
+          <a href="https://github.com/ismailfatihraihan" class="social-link" aria-label="GitHub" target="_blank"
+            rel="noopener">
+            <svg aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+            </svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/ismail-fatih-raihan-873369348" class="social-link" aria-label="LinkedIn"
+            target="_blank" rel="noopener">
+            <svg aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <!-- Email -->
+          <a href="mailto:ismailfatihraihan@gmail.com" class="social-link" aria-label="Email">
+            <svg aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+            </svg>
+          </a>
+
+          <div class="sidebar-divider"></div>
+
+          <!-- LANGUAGE SELECTOR -->
+          <div class="lang-toggle">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="jp">日本語</button>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- ABOUT -->
+      <section id="about">
+        <p class="section-label en-only">About</p>
+        <p class="section-label jp-only">自己紹介</p>
+
+        <p class="about-text reveal en-only">I'm a Computer Science student at Universitas Pendidikan Indonesia, driven
+          to build software that solves real problems.
+        </p>
+        <p class="about-text reveal en-only" style="transition-delay:.1s">While managing my studies and an engineering
+          internship, I approached learning Japanese like an engineering problem: setting measurable goals and using
+          spaced
+          repetition. Within 5 months, I reached N4 level, and I am now preparing for the <strong>JLPT N3 exam this
+            July</strong>.</p>
+        <p class="about-text reveal en-only" style="transition-delay:.2s">This same attention to detail
+          shapes my code. I developed a pro bono zakat report system for a local mosque, processing 318 Ramadhan
+          transactions
+          with <strong>0% calculation errors</strong>. Knowing real people relied on it drove me to cover every edge
+          case.</p>
+        <p class="about-text reveal en-only" style="transition-delay:.3s">I believe my structured approach to learning
+          and deep care for end-users align perfectly with Japanese engineering teams. The culture of
+          <strong>craftsmanship</strong> (ものづくり) and <strong>kaizen</strong> (改善) resonates deeply with my work ethic,
+          and I am eager to grow within it.
+        </p>
+
+        <p class="about-text reveal jp-only" style="font-family:var(--jp)">
+          インドネシア教育大学で情報工学を専攻するイスマイルと申します。最大の強みはプレッシャー下でも規律正しく体系的に学習できる事であり、人々に役立つソフトウェア開発に情熱を注いでいます。
+        </p>
+        <p class="about-text reveal jp-only" style="transition-delay:.1s;font-family:var(--jp)">
+          学業とインターンを両立する中、日本語習得もエンジニアリングと同様に「目標の細分化と反復」を用いて自律的に進めました。約5ヶ月でN4水準に達し、現在は<strong>今年7月のJLPT
+            N3受験</strong>に向け準備中です。</p>
+        <p class="about-text reveal jp-only" style="transition-delay:.2s;font-family:var(--jp)">
+          この「細部へのこだわり」はコードにも表れます。ボランティアで開発したザカート管理システムでは、ラマダン中の318件の取引を<strong>計算エラー0%</strong>で処理しました。実際の生活に関わるからこそ全エッジケースを検証しました。
+        </p>
+        <p class="about-text reveal jp-only" style="transition-delay:.3s;font-family:var(--jp)">
+          私の構造的な学習アプローチとユーザーを深く思いやる姿勢は、日本の技術チームにも必ず貢献できると信じています。日本の「<strong>ものづくり</strong>」や「<strong>改善</strong>」文化は私のワークスタイルと深く共鳴しており、その環境で成長したいと願っています。
+        </p>
+
+        <div class="about-skills reveal" style="transition-delay:.4s">
+          <span class="tag">React</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Python</span>
+          <span class="tag">Laravel</span>
+          <span class="tag">Flutter</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">AWS</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Git</span>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience">
+        <p class="section-label en-only">Experience</p>
+        <p class="section-label jp-only">経歴</p>
+
+        <div class="exp-item">
+          <span class="exp-date">Mar 2025 — Present</span>
+          <div class="exp-body">
+            <p class="exp-title en-only">Volunteer Web Developer</p>
+            <p class="exp-title jp-only" style="font-family:var(--jp)">ボランティアWebデベロッパー</p>
+            <p class="exp-company">Al-Muawanah Mosque Ramadhan Committee</p>
+            <p class="exp-desc en-only">Built and deployed a zakat report system used during Ramadhan to record
+              charitable contributions for the mosque's committee. Successfully processed 318 transactions for 968
+              recipients with 0% calculation error.</p>
+            <p class="exp-desc jp-only" style="font-family:var(--jp)">
+              ラマダン期間中にモスクのザカート管理システムを開発・運用。968名分318件の取引を0%の計算エラーで処理。</p>
+            <div class="exp-tags"><span class="tag">React</span><span class="tag">TypeScript</span><span
+                class="tag">Supabase</span><span class="tag">Volunteer</span></div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <span class="exp-date">Feb 2026 — Aug 2026</span>
+          <div class="exp-body">
+            <p class="exp-title en-only">Software Engineer Intern</p>
+            <p class="exp-title jp-only" style="font-family:var(--jp)">ソフトウェアエンジニアインターン</p>
+            <p class="exp-company">DSTI — Universitas Pendidikan Indonesia</p>
+            <p class="exp-desc en-only">Engineered a data pipeline using Microsoft Fabric and Medallion Architecture to
+              process 17,000+ university alumni records. Interviewed stakeholders to gather requirements and built a
+              structured data foundation (bronze, silver, gold layers) to power analytical dashboards.</p>
+            <p class="exp-desc jp-only" style="font-family:var(--jp)">
+              Microsoft
+              Fabricとメダリオンアーキテクチャを使用してデータパイプラインを構築。ステークホルダーと要件定義を行い、17,000人以上の大学卒業生データを処理し、分析ダッシュボード用の基盤（ブロンズ・シルバー・ゴールド層）を設計しました。
+            </p>
+            <div class="exp-tags"><span class="tag">Microsoft Fabric</span><span class="tag">Data
+                Engineering</span><span class="tag">Medallion Architecture</span></div>
+          </div>
+        </div>
+
+        <div class="exp-item">
+          <span class="exp-date">Aug 2022 — Dec 2022</span>
+          <div class="exp-body">
+            <p class="exp-title en-only">Technician Intern</p>
+            <p class="exp-title jp-only" style="font-family:var(--jp)">テクニシャンインターン</p>
+            <p class="exp-company">PT Granitor Systems APAC</p>
+            <p class="exp-desc en-only">Performed maintenance and troubleshooting of industrial equipment. Gained
+              hands-on experience working in a structured operational environment and collaborating with
+              cross-functional teams.</p>
+            <p class="exp-desc jp-only" style="font-family:var(--jp)">
+              産業機器のメンテナンスとトラブルシューティングを担当。組織的な作業環境での実務経験を積み、部門横断チームと連携しました。</p>
+            <div class="exp-tags"><span class="tag">Maintenance</span><span class="tag">Troubleshooting</span><span
+                class="tag">Teamwork</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects">
+        <p class="section-label en-only">Projects</p>
+        <p class="section-label jp-only">プロジェクト</p>
+
+        <div class="projects-grid">
+          <a class="project-card" href="https://github.com/ismailfatihraihan/zakat-report-system" target="_blank"
+            rel="noopener">
+            <div class="project-header">
+              <span class="project-title en-only">Zakat Report System <span class="project-arrow">&#8599;</span></span>
+              <span class="project-title jp-only" style="font-family:var(--jp)">ザカート管理システム <span
+                  class="project-arrow">&#8599;</span></span>
+            </div>
+            <p class="project-desc en-only">Built for Al-Muawanah Mosque's zakat committee during Ramadhan. Successfully
+              recorded 318 transactions for 968 recipients with 0% calculation error. Includes interactive dashboard,
+              full CRUD, and PDF/CSV export for stakeholder reporting.</p>
+            <p class="project-desc jp-only" style="font-family:var(--jp)">
+              ラマダン期間中のアル・ムアワナ・モスクのザカート委員会向けに開発。968名分318件の取引を0%の計算エラーで記録。ダッシュボード、CRUD機能、ステークホルダー向けPDF/CSVエクスポートを搭載。</p>
+            <div class="project-tags"><span class="tag">React</span><span class="tag">TypeScript</span><span
+                class="tag">Supabase</span><span class="tag">Shadcn/ui</span></div>
+          </a>
+
+          <a class="project-card" href="https://github.com/ismailfatihraihan/tirtabandung" target="_blank"
+            rel="noopener">
+            <div class="project-header">
+              <span class="project-title en-only">Tirta Bandung — Water Monitoring App <span
+                  class="project-arrow">&#8599;</span></span>
+              <span class="project-title jp-only" style="font-family:var(--jp)">Tirta Bandung — 水質監視アプリ <span
+                  class="project-arrow">&#8599;</span></span>
+            </div>
+            <p class="project-desc en-only">Web application for monitoring water quality and quantity across Bandung
+              City. Features an interactive dashboard with map, water point management, inspection logging, and issue
+              reporting.</p>
+            <p class="project-desc jp-only" style="font-family:var(--jp)">
+              バンドン市の水質・水量を監視するWebアプリ。インタラクティブな地図ダッシュボード、水源管理、検査記録、問題報告機能を搭載。</p>
+            <div class="project-tags"><span class="tag">Next.js</span><span class="tag">TypeScript</span><span
+                class="tag">MongoDB</span><span class="tag">Tailwind CSS</span></div>
+          </a>
+
+          <a class="project-card" href="https://github.com/ismailfatihraihan/Fintech-Fraud-Detection" target="_blank"
+            rel="noopener">
+            <div class="project-header">
+              <span class="project-title en-only">Fintech Fraud Detection <span
+                  class="project-arrow">&#8599;</span></span>
+              <span class="project-title jp-only" style="font-family:var(--jp)">フィンテック詐欺検出 <span
+                  class="project-arrow">&#8599;</span></span>
+            </div>
+            <p class="project-desc en-only">ML pipeline for detecting fraudulent fintech transactions. Compared 4 models
+              (Logistic Regression, Random Forest, XGBoost, LightGBM) with SMOTE and hyperparameter tuning. Best result:
+              XGBoost AUC-ROC 0.8383.</p>
+            <p class="project-desc jp-only" style="font-family:var(--jp)">
+              不正取引を検出するMLパイプライン。4つのモデルを比較し、SMOTEとハイパーパラメータチューニングを適用。最良結果：XGBoost AUC-ROC 0.8383。</p>
+            <div class="project-tags"><span class="tag">Python</span><span class="tag">XGBoost</span><span
+                class="tag">LightGBM</span><span class="tag">scikit-learn</span></div>
+          </a>
+
+          <a class="project-card" href="https://github.com/ismailfatihraihan/provis-kuis-camp-app" target="_blank"
+            rel="noopener">
+            <div class="project-header">
+              <span class="project-title en-only">Go Camp — Camping Gear Rental App <span
+                  class="project-arrow">&#8599;</span></span>
+              <span class="project-title jp-only" style="font-family:var(--jp)">Go Camp — キャンプ用品レンタルアプリ <span
+                  class="project-arrow">&#8599;</span></span>
+            </div>
+            <p class="project-desc en-only">Mobile app UI for browsing camping destinations and renting gear. Features
+              item details, reviews & ratings, wishlist, cart, and transaction history.</p>
+            <p class="project-desc jp-only" style="font-family:var(--jp)">
+              キャンプ地やギアを探してレンタルできるモバイルアプリUI。商品詳細、レビュー、ウィッシュリスト、カート、取引履歴機能を搭載。</p>
+            <div class="project-tags"><span class="tag">Flutter</span><span class="tag">Dart</span></div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- THEME SELECTOR - FLOATING -->
+    <div class="theme-dots" id="themeDots" role="group" aria-label="Theme selector">
+      <button class="theme-dot" data-theme="stark" style="--dot-color:#b80019" aria-label="Stark (Red)"></button>
+      <button class="theme-dot" data-theme="dark" style="--dot-color:#9d7fe0" aria-label="Dark (Purple)"></button>
+      <button class="theme-dot" data-theme="himmel" style="--dot-color:#4a7eb5" aria-label="Himmel (Blue)"></button>
+      <button class="theme-dot active" data-theme="frieren" style="--dot-color:#3d8a7a"
+        aria-label="Frieren (Teal)"></button>
+    </div>
+  </div>
+
+  <script src="js/main.js" defer></script>
+</body>
+
+</html>
