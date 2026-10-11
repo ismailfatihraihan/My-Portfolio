@@ -43,6 +43,16 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 
 No build tools required. Simply open `index.html` in a browser
 
+## Adding project screenshots
+
+Each project card shows an SVG illustration as a placeholder. To use a real screenshot, put the image in `img/projects/` (WebP, about 1200×500) and replace the card's `<svg class="project-art">…</svg>` with:
+
+```html
+<img src="img/projects/zakat.webp" alt="Zakat Report System dashboard" width="1200" height="500" loading="lazy" />
+```
+
+Then remove `aria-hidden="true"` from its `.project-media` wrapper so the alt text is read.
+
 ## License
 
 This project is open source and available for personal use.
