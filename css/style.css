@@ -360,6 +360,48 @@ section {
   text-decoration: underline;
 }
 
+/* HIGHLIGHTS */
+.stats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+  padding-inline-start: 24px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 14px;
+  background: rgba(var(--surface-r), var(--surface-g), var(--surface-b), 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.3s, transform 0.2s;
+}
+
+.stat:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.stat-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--accent-text);
+  white-space: nowrap;
+}
+
+.stat-label {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
 /* ABOUT SKILLS */
 .about-skills {
   display: flex;
@@ -665,6 +707,10 @@ section {
     margin-block-end: 56px;
   }
 
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   /* Section label — show on mobile as sticky */
   .section-label {
     display: block;
@@ -701,6 +747,10 @@ section {
 
   .name {
     font-size: 30px;
+  }
+
+  .stat-num {
+    font-size: 19px;
   }
 }
 
