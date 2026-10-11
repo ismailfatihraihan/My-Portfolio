@@ -41,6 +41,9 @@ function flash(cls, ms) {
   timers[cls] = setTimeout(() => root.classList.remove(cls), ms);
 }
 
+/* Set by the scroll-reveal block below: re-checks elements a language switch just displayed. */
+let afterLangChange = null;
+
 function setLang(lang, animate = false) {
   if (!META[lang]) lang = 'en';
   if (animate && !REDUCE) flash('lang-anim', 450);
@@ -54,6 +57,7 @@ function setLang(lang, animate = false) {
     b.classList.toggle('active', active);
     b.setAttribute('aria-pressed', String(active));
   });
+  if (afterLangChange) requestAnimationFrame(afterLangChange);
 }
 langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.lang, true)));
 
@@ -75,20 +79,29 @@ function setTheme(theme, animate = false) {
   });
 }
 
-// pointerdown keeps taps reliable on mobile while the dots expand on hover/focus
+// The dots only expand on hover/focus, so taps are handled on pointer events rather than click:
+// a mouse acts on its primary-button press, a touch on release (a scroll that starts on a dot
+// ends in pointercancel and never changes the theme). Keyboard activation arrives as a click.
 themeDots.forEach(dot => {
-  dot.addEventListener('pointerdown', () => {
+  const pick = () => {
     setTheme(dot.dataset.theme, true);
     dot.blur();
+  };
+  dot.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button === 0) pick();
   });
-  // keyboard activation (Enter/Space) fires click without a pointerdown
+  dot.addEventListener('pointerup', e => {
+    if (e.pointerType !== 'mouse') pick();
+  });
   dot.addEventListener('click', e => {
     if (e.detail === 0) setTheme(dot.dataset.theme, true);
   });
 });
 
 // Restore saved preferences (Frieren is the default theme)
-setTheme(store.get('portfolio-theme') || 'frieren');
+const knownThemes = [...themeDots].map(d => d.dataset.theme);
+const savedTheme = store.get('portfolio-theme');
+setTheme(knownThemes.includes(savedTheme) ? savedTheme : 'frieren');
 setLang(store.get('portfolio-lang') || 'en');
 
 // ACTIVE NAV
@@ -140,16 +153,38 @@ if (root.classList.contains('reveal-ready')) {
     requestAnimationFrame(tick);
   };
 
+  const show = (el, animate, i) => {
+    el.classList.add('is-visible');
+    io.unobserve(el);
+    if (!animate) {
+      el.classList.add('revealed');
+      return;
+    }
+    el.style.setProperty('--rd', Math.min(i, 5) * 0.07 + 's');
+    // once the entrance has played, drop its animation so later display toggles
+    // (language switch) don't replay it
+    el.addEventListener('animationend', () => el.classList.add('revealed'), { once: true });
+    const num = el.querySelector('[data-count]');
+    if (num) countUp(num);
+  };
+
   const io = new IntersectionObserver(entries => {
-    entries.filter(e => e.isIntersecting).forEach((entry, i) => {
-      const el = entry.target;
-      el.style.setProperty('--rd', Math.min(i, 5) * 0.07 + 's');
-      el.classList.add('is-visible');
-      const num = el.querySelector('[data-count]');
-      if (num) countUp(num);
-      io.unobserve(el);
+    let i = 0;
+    entries.forEach(entry => {
+      if (entry.isIntersecting) show(entry.target, true, i++);
+      // already scrolled past (e.g. a paragraph that only just became displayed after a
+      // language switch): reveal without animation so it can't stay hidden above the fold
+      else if (entry.boundingClientRect.bottom < 0) show(entry.target, false, 0);
     });
   }, { threshold: 0.12 });
+
+  // The observer only reports a change of intersection, so an element that appears already
+  // above the viewport (display:none -> displayed) never fires; sweep for those here.
+  afterLangChange = () => targets.forEach(el => {
+    if (!el.classList.contains('is-visible') && el.offsetParent && el.getBoundingClientRect().bottom < 0) {
+      show(el, false, 0);
+    }
+  });
 
   targets.forEach(el => io.observe(el));
   window.__revealOk = true;
