@@ -1,95 +1,111 @@
+const root = document.documentElement;
+const store = {
+  get(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(key, value); } catch { /* storage unavailable */ }
+  }
+};
+
 // Cursor glow - only on devices with hover capability
-    const glow = document.getElementById('cursorGlow');
-    if (glow && window.matchMedia('(hover: hover)').matches) {
-      document.addEventListener('mousemove', e => {
-        glow.style.left = e.clientX + 'px';
-        glow.style.top = e.clientY + 'px';
-      });
-    }
+const glow = document.getElementById('cursorGlow');
+if (glow && window.matchMedia('(hover: hover)').matches) {
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+}
 
-    function setLang(lang) {
-      document.documentElement.setAttribute('data-lang', lang);
-      document.documentElement.setAttribute('lang', lang === 'jp' ? 'ja' : 'en');
-      localStorage.setItem('portfolio-lang', lang);
-      document.querySelectorAll('.lang-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.lang === lang);
-      });
-    }
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => setLang(btn.dataset.lang));
-    });
+// LANGUAGE
+const META = {
+  en: {
+    title: 'Ismail Fatih Raihan — Developer',
+    description: 'Ismail Fatih Raihan - Web Developer & Informatics Student, seeking opportunities in Japan'
+  },
+  jp: {
+    title: 'イスマイル・ファティ・ライハン — 開発者',
+    description: 'イスマイル・ファティ・ライハン - ウェブ開発者・情報工学専攻の学生。日本での就業機会を探しています。'
+  }
+};
+const langBtns = document.querySelectorAll('.lang-btn');
+const metaDesc = document.querySelector('meta[name="description"]');
 
+function setLang(lang) {
+  if (!META[lang]) lang = 'en';
+  root.setAttribute('data-lang', lang);
+  root.setAttribute('lang', lang === 'jp' ? 'ja' : 'en');
+  document.title = META[lang].title;
+  if (metaDesc) metaDesc.setAttribute('content', META[lang].description);
+  store.set('portfolio-lang', lang);
+  langBtns.forEach(b => {
+    const active = b.dataset.lang === lang;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-pressed', String(active));
+  });
+}
+langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.lang)));
 
-    // THEME LOGIC
-    const themeDots = document.querySelectorAll('.theme-dot');
-    function setTheme(theme) {
-      if (theme === 'stark') {
-        document.documentElement.removeAttribute('data-theme');
-      } else {
-        document.documentElement.setAttribute('data-theme', theme);
+// THEME
+const themeDots = document.querySelectorAll('.theme-dot');
+
+function setTheme(theme) {
+  if (theme === 'stark') {
+    root.removeAttribute('data-theme');
+  } else {
+    root.setAttribute('data-theme', theme);
+  }
+  store.set('portfolio-theme', theme);
+  themeDots.forEach(d => {
+    const active = d.dataset.theme === theme;
+    d.classList.toggle('active', active);
+    d.setAttribute('aria-pressed', String(active));
+  });
+}
+
+// pointerdown keeps taps reliable on mobile while the dots expand on hover/focus
+themeDots.forEach(dot => {
+  dot.addEventListener('pointerdown', () => {
+    setTheme(dot.dataset.theme);
+    dot.blur();
+  });
+  // keyboard activation (Enter/Space) fires click without a pointerdown
+  dot.addEventListener('click', e => {
+    if (e.detail === 0) setTheme(dot.dataset.theme);
+  });
+});
+
+// Restore saved preferences (Frieren is the default theme)
+setTheme(store.get('portfolio-theme') || 'frieren');
+setLang(store.get('portfolio-lang') || 'en');
+
+// ACTIVE NAV
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-item');
+
+function updateActiveNav() {
+  const nearBottom = document.documentElement.scrollHeight - (window.innerHeight + window.scrollY) < 100;
+  let current = sections[0] ? sections[0].id : '';
+
+  if (nearBottom) {
+    current = sections[sections.length - 1].id;
+  } else {
+    // lowest section whose top has passed the middle of the viewport wins
+    for (let i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].getBoundingClientRect().top <= window.innerHeight * 0.5) {
+        current = sections[i].id;
+        break;
       }
-      localStorage.setItem('portfolio-theme', theme);
-      themeDots.forEach(d => d.classList.toggle('active', d.dataset.theme === theme));
     }
+  }
 
-    // Allow touch events on mobile to register as clicks correctly even during hover transition
-    themeDots.forEach(dot => {
-      dot.addEventListener('pointerdown', (e) => {
-        // Jika diklik tapi posisinya sedang 0 width (karena glitch reflow CSS),
-        // tangkap eventnya.
-        setTheme(dot.dataset.theme);
-        dot.blur();
-      });
-      // Kita juga pasang onclick biasa sebagai fallback desktop
-      dot.addEventListener('click', (e) => {
-        setTheme(dot.dataset.theme);
-        dot.blur();
-      });
-    });
+  navLinks.forEach(n => {
+    const active = n.getAttribute('href') === '#' + current;
+    n.classList.toggle('active', active);
+    if (active) n.setAttribute('aria-current', 'true');
+    else n.removeAttribute('aria-current');
+  });
+}
 
-    // Restore saved preferences (Set Frieren target as initial default if undefined)
-    const savedTheme = localStorage.getItem('portfolio-theme') || 'frieren';
-    const savedLang = localStorage.getItem('portfolio-lang');
-    if (savedTheme) setTheme(savedTheme);
-
-    // Check active nav logic
-
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-item');
-
-    function updateActiveNav() {
-      const scrollBottom = window.innerHeight + window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-
-      // If near bottom of page, activate last nav item
-      if (docHeight - scrollBottom < 100) {
-        const lastSection = sections[sections.length - 1];
-        navLinks.forEach(n => {
-          n.classList.toggle('active', n.getAttribute('href') === '#' + lastSection.id);
-        });
-        return;
-      }
-
-      // Find current section based on scroll position
-      let current = '';
-
-      // We check from bottom to top so the lowest visible section takes precedence
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        const rect = section.getBoundingClientRect();
-
-        // Element is active if its top is above the middle of the screen
-        // or its top is within the viewport (like when scrolling up)
-        if (rect.top <= window.innerHeight * 0.5) {
-          current = section.id;
-          break;
-        }
-      }
-      if (!current && sections.length) current = sections[0].id;
-      navLinks.forEach(n => {
-        n.classList.toggle('active', n.getAttribute('href') === '#' + current);
-      });
-    }
-
-    window.addEventListener('scroll', updateActiveNav, { passive: true });
-    updateActiveNav();
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();

@@ -9,10 +9,12 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 ## Features
 
 - **Bilingual** — Full English / Japanese (日本語) language toggle
-- **Multiple Themes** — Four color themes (Stark, Fern, Himmel, Frieren)
+- **Multiple Themes** — Four color themes (Stark, Dark, Himmel, Frieren)
 - **Responsive Layout** — Sidebar + content layout that adapts to all screen sizes
 - **Cursor Glow Effect** — Subtle radial glow that follows the mouse on hover-capable devices
 - **Smooth Navigation** — Scroll-based active section highlighting
+- **Accessible** — Skip link, ARIA states, `lang` tags on Japanese text, reduced-motion support
+- **SEO-ready** — Open Graph, Twitter card, JSON-LD, canonical, sitemap
 
 ## Tech Stack
 
@@ -31,6 +33,8 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 │   └── style.css   # All styles & theme variables
 ├── js/
 │   └── main.js     # Cursor glow, language/theme toggle, scroll nav
+├── robots.txt
+├── sitemap.xml
 └── README.md
 ```
 
