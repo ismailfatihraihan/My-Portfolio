@@ -16,6 +16,7 @@
   --border: #e0e0e0;
   --accent: #b80019;
   --accent2: #8a0012;
+  --accent-text: #b80019;
   --accent-r: 184;
   --accent-g: 0;
   --accent-b: 25;
@@ -97,7 +98,7 @@ body {
 
 .lang-btn.active {
   background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08);
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 700;
 }
 
@@ -147,14 +148,14 @@ body {
   font-family: var(--jp);
   font-size: 13px;
   font-weight: 300;
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 4px;
   margin-top: 8px;
 }
 
 /* Highlighted / Bold text in paragraphs */
 strong {
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 600;
 }
 
@@ -254,7 +255,7 @@ strong {
 }
 
 .social-link:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .social-link svg {
@@ -298,7 +299,7 @@ section {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 4px;
-  color: var(--accent);
+  color: var(--accent-text);
   text-transform: uppercase;
   margin-bottom: 0;
   display: none;
@@ -316,7 +317,7 @@ section {
 }
 
 .about-text a {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
 }
 
@@ -337,7 +338,7 @@ section {
 .tag {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--accent);
+  color: var(--accent-text);
   background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.06);
   border: 1px solid rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
   border-radius: 20px;
@@ -396,7 +397,7 @@ section {
 .exp-company {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 10px;
   letter-spacing: 0.5px;
 }
@@ -465,7 +466,7 @@ section {
 }
 
 .project-card:hover .project-arrow {
-  color: var(--accent);
+  color: var(--accent-text);
   transform: translate(3px, -3px);
 }
 
@@ -508,8 +509,8 @@ section {
   left: 8px;
   z-index: 1000;
   padding: 8px 14px;
-  background: var(--accent);
-  color: #fff;
+  background: var(--text);
+  color: var(--bg);
   border-radius: var(--radius);
   text-decoration: none;
   transform: translateY(-200%);
@@ -619,6 +620,7 @@ section {
   }
 
   .content {
+    width: 100%;
     padding-block-start: 32px;
     padding-block-end: 64px;
     padding-inline: 0;
@@ -678,6 +680,7 @@ section {
   --border: #2a2040;
   --accent: #9d7fe0;
   --accent2: #7c5cbf;
+  --accent-text: #9d7fe0;
   --accent-r: 157;
   --accent-g: 127;
   --accent-b: 224;
@@ -711,6 +714,7 @@ section {
   --border: #c8d8ed;
   --accent: #4a7eb5;
   --accent2: #3a6499;
+  --accent-text: #3d6794;
   --accent-r: 74;
   --accent-g: 126;
   --accent-b: 181;
@@ -718,7 +722,7 @@ section {
   --text-r: 26;
   --text-g: 37;
   --text-b: 53;
-  --muted: #5a7a99;
+  --muted: #4f6b87;
   --white: #0f1e30;
   --available: #16a34a;
   --available-r: 22;
@@ -742,6 +746,7 @@ section {
   --border: #c8d0d4;
   --accent: #3d8a7a;
   --accent2: #2d7a6a;
+  --accent-text: #327164;
   --accent-r: 61;
   --accent-g: 138;
   --accent-b: 122;
@@ -774,7 +779,7 @@ section {
 
 [data-theme="frieren"] .tag:hover {
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 
@@ -874,7 +879,7 @@ section {
 
 .lang-btn.active {
   background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08);
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 700;
 }
 
