@@ -16,6 +16,7 @@
   --border: #e0e0e0;
   --accent: #b80019;
   --accent2: #8a0012;
+  --accent-text: #b80019;
   --accent-r: 184;
   --accent-g: 0;
   --accent-b: 25;
@@ -33,6 +34,8 @@
   --shadow: rgb(0 0 0 / 0.06);
   --shadow-accent: rgb(184 0 25 / 0.06);
   --glow-opacity: 0.06;
+  --bg-tint: 0.07;
+  --grain-opacity: 0.05;
   --radius: 8px;
   --radius-lg: 10px;
   --mono: 'JetBrains Mono', monospace;
@@ -70,6 +73,39 @@ body {
   background: var(--accent2);
 }
 
+/* BACKGROUND — theme-tinted gradient + film grain. Both layers sit behind
+   everything and ignore the pointer; the tint is capped low enough that text
+   contrast stays AA (verified against the worst-case tinted background). */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  background:
+    radial-gradient(60vmax 50vmax at 8% -10%, rgba(var(--accent-r), var(--accent-g), var(--accent-b), var(--bg-tint)), transparent 70%),
+    radial-gradient(50vmax 45vmax at 105% 110%, rgba(var(--accent-r), var(--accent-g), var(--accent-b), calc(var(--bg-tint) * 0.7)), transparent 70%);
+}
+
+body::after {
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] body::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (max-width: 768px) {
+  body::after {
+    display: none;
+  }
+}
+
 /* CURSOR GLOW */
 .cursor-glow {
   position: fixed;
@@ -97,7 +133,7 @@ body {
 
 .lang-btn.active {
   background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08);
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 700;
 }
 
@@ -147,14 +183,14 @@ body {
   font-family: var(--jp);
   font-size: 13px;
   font-weight: 300;
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 4px;
   margin-top: 8px;
 }
 
 /* Highlighted / Bold text in paragraphs */
 strong {
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 600;
 }
 
@@ -254,7 +290,7 @@ strong {
 }
 
 .social-link:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .social-link svg {
@@ -298,7 +334,7 @@ section {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 4px;
-  color: var(--accent);
+  color: var(--accent-text);
   text-transform: uppercase;
   margin-bottom: 0;
   display: none;
@@ -316,12 +352,54 @@ section {
 }
 
 .about-text a {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
 }
 
 .about-text a:hover {
   text-decoration: underline;
+}
+
+/* HIGHLIGHTS */
+.stats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+  padding-inline-start: 24px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 14px;
+  background: rgba(var(--surface-r), var(--surface-g), var(--surface-b), 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.3s, transform 0.2s;
+}
+
+.stat:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.stat-num {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--accent-text);
+  white-space: nowrap;
+}
+
+.stat-label {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+  text-wrap: balance;
 }
 
 /* ABOUT SKILLS */
@@ -337,7 +415,7 @@ section {
 .tag {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--accent);
+  color: var(--accent-text);
   background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.06);
   border: 1px solid rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
   border-radius: 20px;
@@ -396,7 +474,7 @@ section {
 .exp-company {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 10px;
   letter-spacing: 0.5px;
 }
@@ -432,6 +510,77 @@ section {
   overflow: hidden;
 }
 
+.project-media {
+  aspect-ratio: 2.4 / 1;
+  margin-block-end: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg,
+      rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.1),
+      rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.03));
+}
+
+/* Drop a real screenshot in with <img> and it replaces the illustration */
+.project-media img,
+.project-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover .project-art,
+.project-card:hover .project-media img {
+  transform: scale(1.04);
+}
+
+.art-frame {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.art-line {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.art-dash {
+  stroke-dasharray: 3 4;
+}
+
+.art-dot {
+  fill: var(--border);
+}
+
+.art-fill {
+  fill: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.1);
+}
+
+.art-fill-strong {
+  fill: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.28);
+}
+
+.art-accent {
+  fill: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.6);
+}
+
+.art-pin {
+  fill: var(--accent);
+}
+
+.art-accent-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
 .project-card::before {
   content: '';
   position: absolute;
@@ -465,7 +614,7 @@ section {
 }
 
 .project-card:hover .project-arrow {
-  color: var(--accent);
+  color: var(--accent-text);
   transform: translate(3px, -3px);
 }
 
@@ -508,8 +657,8 @@ section {
   left: 8px;
   z-index: 1000;
   padding: 8px 14px;
-  background: var(--accent);
-  color: #fff;
+  background: var(--text);
+  color: var(--bg);
   border-radius: var(--radius);
   text-decoration: none;
   transform: translateY(-200%);
@@ -551,10 +700,6 @@ section {
   visibility: hidden;
 }
 
-[data-lang="en"] .en-only,
-[data-lang="jp"] .jp-only {
-  animation: langFadeIn 0.4s ease forwards;
-}
 
 @keyframes langFadeIn {
   from {
@@ -564,6 +709,78 @@ section {
   to {
     opacity: 1;
   }
+}
+
+/* MICRO-INTERACTIONS — only for visitors who haven't asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* language swap: fade the incoming text, only when the visitor switches */
+  .lang-anim .en-only,
+  .lang-anim .jp-only {
+    animation: langFadeIn 0.4s ease;
+  }
+
+  /* theme swap: colors glide instead of snapping */
+  .theme-anim *,
+  .theme-anim *::before,
+  .theme-anim *::after {
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, fill 0.35s ease, stroke 0.35s ease !important;
+  }
+
+  /* scroll reveal */
+  .reveal-ready :is(.about-text, .stat, .about-skills, .exp-item, .project-card):not(.is-visible) {
+    opacity: 0;
+    translate: 0 14px;
+  }
+
+  .reveal-ready .is-visible:not(.revealed) {
+    animation: revealUp 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--rd, 0s);
+  }
+
+  @keyframes revealUp {
+    from {
+      opacity: 0;
+      translate: 0 14px;
+    }
+
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+}
+
+@media print {
+  .reveal-ready :is(.about-text, .stat, .about-skills, .exp-item, .project-card):not(.is-visible) {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* hover polish */
+.tag {
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.tag:hover {
+  transform: translateY(-1px);
+}
+
+.social-link {
+  transition: color 0.2s, transform 0.2s;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+}
+
+.exp-item {
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+}
+
+.exp-item:hover {
+  transform: translateX(4px);
 }
 
 /* RESPONSIVE — Tablet */
@@ -619,6 +836,7 @@ section {
   }
 
   .content {
+    width: 100%;
     padding-block-start: 32px;
     padding-block-end: 64px;
     padding-inline: 0;
@@ -626,6 +844,10 @@ section {
 
   section {
     margin-block-end: 56px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   /* Section label — show on mobile as sticky */
@@ -665,9 +887,14 @@ section {
   .name {
     font-size: 30px;
   }
+
+  .stat-num {
+    font-size: 19px;
+  }
 }
 
-/* DARK MODE — Fern (葬送のフリーレン) */
+/* "dark" theme — Fern (葬送のフリーレン): the dark purple one. The key stays "dark"
+   because it is what visitors already have saved in localStorage. */
 [data-theme="dark"] {
   --bg: #0d0b14;
   --bg2: #13101e;
@@ -678,6 +905,7 @@ section {
   --border: #2a2040;
   --accent: #9d7fe0;
   --accent2: #7c5cbf;
+  --accent-text: #9d7fe0;
   --accent-r: 157;
   --accent-g: 127;
   --accent-b: 224;
@@ -695,6 +923,8 @@ section {
   --shadow: rgb(0 0 0 / 0.12);
   --shadow-accent: rgb(157 127 224 / 0.1);
   --glow-opacity: 0.12;
+  --bg-tint: 0.09;
+  --grain-opacity: 0.07;
 }
 
 
@@ -711,6 +941,7 @@ section {
   --border: #c8d8ed;
   --accent: #4a7eb5;
   --accent2: #3a6499;
+  --accent-text: #3d6794;
   --accent-r: 74;
   --accent-g: 126;
   --accent-b: 181;
@@ -718,7 +949,7 @@ section {
   --text-r: 26;
   --text-g: 37;
   --text-b: 53;
-  --muted: #5a7a99;
+  --muted: #4f6b87;
   --white: #0f1e30;
   --available: #16a34a;
   --available-r: 22;
@@ -742,6 +973,7 @@ section {
   --border: #c8d0d4;
   --accent: #3d8a7a;
   --accent2: #2d7a6a;
+  --accent-text: #327164;
   --accent-r: 61;
   --accent-g: 138;
   --accent-b: 122;
@@ -774,7 +1006,7 @@ section {
 
 [data-theme="frieren"] .tag:hover {
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 
@@ -874,7 +1106,7 @@ section {
 
 .lang-btn.active {
   background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08);
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 700;
 }
 

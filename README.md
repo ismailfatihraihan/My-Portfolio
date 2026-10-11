@@ -9,8 +9,10 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 ## Features
 
 - **Bilingual** — Full English / Japanese (日本語) language toggle
-- **Multiple Themes** — Four color themes (Stark, Dark, Himmel, Frieren)
+- **Multiple Themes** — Four color themes (Stark, Fern — dark purple, Himmel, Frieren)
 - **Responsive Layout** — Sidebar + content layout that adapts to all screen sizes
+- **Soft Background** — Theme-tinted gradient with a subtle film grain (grain is dropped on small screens)
+- **Micro-interactions** — Staggered scroll reveal, count-up stats, smooth theme/language transitions (all off under `prefers-reduced-motion`)
 - **Cursor Glow Effect** — Subtle radial glow that follows the mouse on hover-capable devices
 - **Smooth Navigation** — Scroll-based active section highlighting
 - **Accessible** — Skip link, ARIA states, `lang` tags on Japanese text, reduced-motion support
@@ -41,6 +43,16 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 ## Getting Started
 
 No build tools required. Simply open `index.html` in a browser
+
+## Adding project screenshots
+
+Each project card shows an SVG illustration as a placeholder. To use a real screenshot, put the image in `img/projects/` (WebP, about 1200×500) and replace the card's `<svg class="project-art">…</svg>` with:
+
+```html
+<img src="img/projects/zakat.webp" alt="Zakat Report System dashboard" width="1200" height="500" loading="lazy" />
+```
+
+Then remove `aria-hidden="true"` from its `.project-media` wrapper so the alt text is read.
 
 ## License
 
