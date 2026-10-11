@@ -34,6 +34,17 @@
     ]
   }
   </script>
+  <script>
+    /* Scroll-reveal is progressive: only gated on when it can actually run, and
+       dropped again if main.js never reports in (so content can't stay hidden). */
+    (function () {
+      var d = document.documentElement;
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.classList.add('reveal-ready');
+        setTimeout(function () { if (!window.__revealOk) d.classList.remove('reveal-ready'); }, 3000);
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -161,7 +172,7 @@
 
         <ul class="stats" aria-label="Highlights">
           <li class="stat">
-            <span class="stat-num">318</span>
+            <span class="stat-num" data-count="318">318</span>
             <span class="stat-label en-only">Ramadhan transactions for 968 recipients</span>
             <span class="stat-label jp-only" lang="ja">968名分のラマダン取引</span>
           </li>
@@ -171,7 +182,7 @@
             <span class="stat-label jp-only" lang="ja">ザカート管理の計算エラー</span>
           </li>
           <li class="stat">
-            <span class="stat-num">17,000+</span>
+            <span class="stat-num" data-count="17000" data-suffix="+">17,000+</span>
             <span class="stat-label en-only">Alumni records in the data pipeline</span>
             <span class="stat-label jp-only" lang="ja">データパイプラインの卒業生データ</span>
           </li>

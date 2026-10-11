@@ -700,10 +700,6 @@ section {
   visibility: hidden;
 }
 
-[data-lang="en"] .en-only,
-[data-lang="jp"] .jp-only {
-  animation: langFadeIn 0.4s ease forwards;
-}
 
 @keyframes langFadeIn {
   from {
@@ -713,6 +709,78 @@ section {
   to {
     opacity: 1;
   }
+}
+
+/* MICRO-INTERACTIONS — only for visitors who haven't asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* language swap: fade the incoming text, only when the visitor switches */
+  .lang-anim .en-only,
+  .lang-anim .jp-only {
+    animation: langFadeIn 0.4s ease;
+  }
+
+  /* theme swap: colors glide instead of snapping */
+  .theme-anim *,
+  .theme-anim *::before,
+  .theme-anim *::after {
+    transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, fill 0.35s ease, stroke 0.35s ease !important;
+  }
+
+  /* scroll reveal */
+  .reveal-ready :is(.about-text, .stat, .about-skills, .exp-item, .project-card):not(.is-visible) {
+    opacity: 0;
+    translate: 0 14px;
+  }
+
+  .reveal-ready .is-visible {
+    animation: revealUp 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--rd, 0s);
+  }
+
+  @keyframes revealUp {
+    from {
+      opacity: 0;
+      translate: 0 14px;
+    }
+
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+}
+
+@media print {
+  .reveal-ready :is(.about-text, .stat, .about-skills, .exp-item, .project-card):not(.is-visible) {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* hover polish */
+.tag {
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.tag:hover {
+  transform: translateY(-1px);
+}
+
+.social-link {
+  transition: color 0.2s, transform 0.2s;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+}
+
+.exp-item {
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+}
+
+.exp-item:hover {
+  transform: translateX(4px);
 }
 
 /* RESPONSIVE — Tablet */

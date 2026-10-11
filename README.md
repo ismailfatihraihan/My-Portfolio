@@ -12,6 +12,7 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 - **Multiple Themes** — Four color themes (Stark, Fern — dark purple, Himmel, Frieren)
 - **Responsive Layout** — Sidebar + content layout that adapts to all screen sizes
 - **Soft Background** — Theme-tinted gradient with a subtle film grain (grain is dropped on small screens)
+- **Micro-interactions** — Staggered scroll reveal, count-up stats, smooth theme/language transitions (all off under `prefers-reduced-motion`)
 - **Cursor Glow Effect** — Subtle radial glow that follows the mouse on hover-capable devices
 - **Smooth Navigation** — Scroll-based active section highlighting
 - **Accessible** — Skip link, ARIA states, `lang` tags on Japanese text, reduced-motion support

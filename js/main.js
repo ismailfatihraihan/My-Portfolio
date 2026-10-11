@@ -31,8 +31,19 @@ const META = {
 const langBtns = document.querySelectorAll('.lang-btn');
 const metaDesc = document.querySelector('meta[name="description"]');
 
-function setLang(lang) {
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Adds a class for `ms`, restarting the timer if it is already on. */
+const timers = {};
+function flash(cls, ms) {
+  clearTimeout(timers[cls]);
+  root.classList.add(cls);
+  timers[cls] = setTimeout(() => root.classList.remove(cls), ms);
+}
+
+function setLang(lang, animate = false) {
   if (!META[lang]) lang = 'en';
+  if (animate && !REDUCE) flash('lang-anim', 450);
   root.setAttribute('data-lang', lang);
   root.setAttribute('lang', lang === 'jp' ? 'ja' : 'en');
   document.title = META[lang].title;
@@ -44,12 +55,13 @@ function setLang(lang) {
     b.setAttribute('aria-pressed', String(active));
   });
 }
-langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.lang)));
+langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.lang, true)));
 
 // THEME
 const themeDots = document.querySelectorAll('.theme-dot');
 
-function setTheme(theme) {
+function setTheme(theme, animate = false) {
+  if (animate && !REDUCE) flash('theme-anim', 450);
   if (theme === 'stark') {
     root.removeAttribute('data-theme');
   } else {
@@ -66,12 +78,12 @@ function setTheme(theme) {
 // pointerdown keeps taps reliable on mobile while the dots expand on hover/focus
 themeDots.forEach(dot => {
   dot.addEventListener('pointerdown', () => {
-    setTheme(dot.dataset.theme);
+    setTheme(dot.dataset.theme, true);
     dot.blur();
   });
   // keyboard activation (Enter/Space) fires click without a pointerdown
   dot.addEventListener('click', e => {
-    if (e.detail === 0) setTheme(dot.dataset.theme);
+    if (e.detail === 0) setTheme(dot.dataset.theme, true);
   });
 });
 
@@ -109,3 +121,36 @@ function updateActiveNav() {
 
 window.addEventListener('scroll', updateActiveNav, { passive: true });
 updateActiveNav();
+
+// SCROLL REVEAL + COUNT-UP
+// Only runs when the head script switched `reveal-ready` on (motion allowed, IO supported).
+if (root.classList.contains('reveal-ready')) {
+  const targets = document.querySelectorAll('.about-text, .stat, .about-skills, .exp-item, .project-card');
+
+  const countUp = el => {
+    const end = Number(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const start = performance.now();
+    const tick = now => {
+      const t = Math.min((now - start) / 900, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(end * eased).toLocaleString('en-US') + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const io = new IntersectionObserver(entries => {
+    entries.filter(e => e.isIntersecting).forEach((entry, i) => {
+      const el = entry.target;
+      el.style.setProperty('--rd', Math.min(i, 5) * 0.07 + 's');
+      el.classList.add('is-visible');
+      const num = el.querySelector('[data-count]');
+      if (num) countUp(num);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12 });
+
+  targets.forEach(el => io.observe(el));
+  window.__revealOk = true;
+}
