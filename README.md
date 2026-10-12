@@ -42,6 +42,11 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 └── README.md
 ```
 
+## Live site
+
+https://ismailfatihraihan.github.io/My-Portfolio/ (GitHub Pages, published from `main`).
+To use a custom domain again, add a `CNAME` file with the domain, point its DNS at GitHub Pages, and update the canonical/Open Graph URLs in `index.html` plus `sitemap.xml` and `robots.txt`.
+
 ## Getting Started
 
 No build tools required. Simply open `index.html` in a browser
