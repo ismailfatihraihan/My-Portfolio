@@ -64,14 +64,14 @@ langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.
 // THEME
 const themeDots = document.querySelectorAll('.theme-dot');
 
-function setTheme(theme, animate = false) {
+function setTheme(theme, animate = false, persist = true) {
   if (animate && !REDUCE) flash('theme-anim', 450);
   if (theme === 'stark') {
     root.removeAttribute('data-theme');
   } else {
     root.setAttribute('data-theme', theme);
   }
-  store.set('portfolio-theme', theme);
+  if (persist) store.set('portfolio-theme', theme);
   themeDots.forEach(d => {
     const active = d.dataset.theme === theme;
     d.classList.toggle('active', active);
@@ -101,7 +101,10 @@ themeDots.forEach(dot => {
 // Restore saved preferences (Frieren is the default theme)
 const knownThemes = [...themeDots].map(d => d.dataset.theme);
 const savedTheme = store.get('portfolio-theme');
-setTheme(knownThemes.includes(savedTheme) ? savedTheme : 'frieren');
+const hasSavedTheme = knownThemes.includes(savedTheme);
+// With no saved choice the head script has already picked Frieren, or Fern for a dark OS;
+// mirror that into the UI without saving it, so the OS preference keeps applying until they pick.
+setTheme(hasSavedTheme ? savedTheme : (root.getAttribute('data-theme') || 'stark'), false, hasSavedTheme);
 setLang(store.get('portfolio-lang') || 'en');
 
 // ACTIVE NAV
@@ -138,7 +141,7 @@ updateActiveNav();
 // SCROLL REVEAL + COUNT-UP
 // Only runs when the head script switched `reveal-ready` on (motion allowed, IO supported).
 if (root.classList.contains('reveal-ready')) {
-  const targets = document.querySelectorAll('.about-text, .stat, .about-skills, .exp-item, .project-card');
+  const targets = document.querySelectorAll('.about-text, .stat, .about-skills, .exp-item, .project-card, .contact-card');
 
   const countUp = el => {
     const end = Number(el.dataset.count);
@@ -188,4 +191,25 @@ if (root.classList.contains('reveal-ready')) {
 
   targets.forEach(el => io.observe(el));
   window.__revealOk = true;
+}
+
+// COPY EMAIL
+const copyBtn = document.getElementById('copyEmail');
+const copyStatus = document.getElementById('copyStatus');
+if (copyBtn && copyStatus) {
+  let hideTimer;
+  const say = msg => {
+    copyStatus.textContent = msg;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => { copyStatus.textContent = ''; }, 2500);
+  };
+  copyBtn.addEventListener('click', async () => {
+    const jp = root.getAttribute('data-lang') === 'jp';
+    try {
+      await navigator.clipboard.writeText(copyBtn.dataset.email);
+      say(jp ? 'コピーしました' : 'Email copied');
+    } catch {
+      say(copyBtn.dataset.email); // clipboard blocked: show it so it can be copied by hand
+    }
+  });
 }

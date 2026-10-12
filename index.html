@@ -40,6 +40,19 @@
   }
   </script>
   <script>
+    /* Apply saved (or OS-preferred) theme and language before first paint, so the page
+       never flashes the stylesheet's root colors. main.js takes over from here. */
+    (function () {
+      var d = document.documentElement, t, l;
+      try { t = localStorage.getItem('portfolio-theme'); l = localStorage.getItem('portfolio-lang'); } catch (e) { }
+      if (['stark', 'dark', 'himmel', 'frieren'].indexOf(t) < 0) {
+        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'frieren';
+      }
+      if (t !== 'stark') d.setAttribute('data-theme', t);
+      if (l === 'jp') { d.setAttribute('data-lang', 'jp'); d.setAttribute('lang', 'ja'); }
+    })();
+  </script>
+  <script>
     /* Scroll-reveal is progressive: only gated on when it can actually run, and
        dropped again if main.js never reports in (so content can't stay hidden). */
     (function () {
@@ -93,6 +106,9 @@
         </a>
         <a class="nav-item" href="#projects">
           <span class="en-only">Projects</span><span lang="ja" class="jp-only">プロジェクト</span>
+        </a>
+        <a class="nav-item" href="#contact">
+          <span class="en-only">Contact</span><span lang="ja" class="jp-only">連絡先</span>
         </a>
       </nav>
 
@@ -390,6 +406,33 @@
               キャンプ地やギアを探してレンタルできるモバイルアプリUI。商品詳細、レビュー、ウィッシュリスト、カート、取引履歴機能を搭載。</p>
             <div class="project-tags"><span class="tag">Flutter</span><span class="tag">Dart</span></div>
           </a>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <p class="section-label en-only">Contact</p>
+        <p class="section-label jp-only" lang="ja">連絡先</p>
+
+        <div class="contact-card">
+          <h2 class="contact-title en-only">Open to opportunities in Japan.</h2>
+          <h2 class="contact-title jp-only" lang="ja">日本でのキャリア機会を探しています。</h2>
+          <p class="contact-text en-only">If you're hiring, or just want to talk about web, data, or building useful
+            software, I'd love to hear from you.</p>
+          <p class="contact-text jp-only" lang="ja">採用のご相談はもちろん、ウェブ、データ、ソフトウェア開発についてのお話でも、お気軽にご連絡ください。</p>
+
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:ismailfatihraihan@gmail.com">
+              <span class="en-only">Email me</span><span class="jp-only" lang="ja">メールを送る</span>
+            </a>
+            <button class="btn" type="button" id="copyEmail" data-email="ismailfatihraihan@gmail.com">
+              <span class="en-only">Copy email</span><span class="jp-only" lang="ja">アドレスをコピー</span>
+            </button>
+            <a class="btn" href="https://www.linkedin.com/in/ismail-fatih-raihan-873369348" target="_blank"
+              rel="noopener">LinkedIn</a>
+            <a class="btn" href="https://github.com/ismailfatihraihan" target="_blank" rel="noopener">GitHub</a>
+          </div>
+          <p class="contact-status" id="copyStatus" role="status" aria-live="polite"></p>
         </div>
       </section>
 
