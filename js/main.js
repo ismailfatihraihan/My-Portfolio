@@ -57,6 +57,8 @@ function setLang(lang, animate = false) {
     b.classList.toggle('active', active);
     b.setAttribute('aria-pressed', String(active));
   });
+  const copyMsg = document.getElementById('copyStatus');
+  if (copyMsg) copyMsg.textContent = '';
   if (afterLangChange) requestAnimationFrame(afterLangChange);
 }
 langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.lang, true)));
@@ -104,7 +106,8 @@ const savedTheme = store.get('portfolio-theme');
 const hasSavedTheme = knownThemes.includes(savedTheme);
 // With no saved choice the head script has already picked Frieren, or Fern for a dark OS;
 // mirror that into the UI without saving it, so the OS preference keeps applying until they pick.
-setTheme(hasSavedTheme ? savedTheme : (root.getAttribute('data-theme') || 'stark'), false, hasSavedTheme);
+const pageTheme = root.getAttribute('data-theme') || 'stark';
+setTheme(hasSavedTheme ? savedTheme : (knownThemes.includes(pageTheme) ? pageTheme : 'frieren'), false, hasSavedTheme);
 setLang(store.get('portfolio-lang') || 'en');
 
 // ACTIVE NAV
@@ -193,23 +196,26 @@ if (root.classList.contains('reveal-ready')) {
   window.__revealOk = true;
 }
 
-// COPY EMAIL
+// COPY EMAIL (address comes from the Email me link, so there is one place to edit it)
 const copyBtn = document.getElementById('copyEmail');
 const copyStatus = document.getElementById('copyStatus');
-if (copyBtn && copyStatus) {
+const mailLink = document.querySelector('#contact a[href^="mailto:"]');
+if (copyBtn && copyStatus && mailLink) {
+  const email = mailLink.getAttribute('href').replace(/^mailto:/, '');
   let hideTimer;
-  const say = msg => {
+  const say = (msg, sticky = false) => {
     copyStatus.textContent = msg;
     clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => { copyStatus.textContent = ''; }, 2500);
+    if (!sticky) hideTimer = setTimeout(() => { copyStatus.textContent = ''; }, 2500);
   };
   copyBtn.addEventListener('click', async () => {
     const jp = root.getAttribute('data-lang') === 'jp';
     try {
-      await navigator.clipboard.writeText(copyBtn.dataset.email);
+      await navigator.clipboard.writeText(email);
       say(jp ? 'コピーしました' : 'Email copied');
     } catch {
-      say(copyBtn.dataset.email); // clipboard blocked: show it so it can be copied by hand
+      // clipboard blocked: leave the address on screen (no timeout) so it can be selected by hand
+      say((jp ? 'コピーできませんでした：' : "Couldn't copy: ") + email, true);
     }
   });
 }

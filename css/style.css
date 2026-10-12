@@ -220,19 +220,6 @@ strong {
   transform: translateY(-50%);
 }
 
-/* We need to clear position absolute animation transform conflict */
-@keyframes navFade {
-  from {
-    opacity: 0;
-    transform: translateY(calc(-50% + 20px));
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(-50%);
-  }
-}
-
 .nav-item {
   display: flex;
   align-items: center;
@@ -853,6 +840,16 @@ section {
 
 .exp-item:hover {
   transform: translateX(4px);
+}
+
+/* Short desktop viewports: the vertically centered nav would run into the intro text,
+   so let it flow under it instead. */
+@media (max-height: 620px) and (min-width: 769px) {
+  .nav {
+    position: static;
+    transform: none;
+    margin-top: 24px;
+  }
 }
 
 /* RESPONSIVE — Tablet */
