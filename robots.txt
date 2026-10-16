@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ismailfatihraihan.github.io/My-Portfolio/sitemap.xml
+Sitemap: https://ifrehan.my.id/sitemap.xml

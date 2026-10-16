@@ -11,7 +11,7 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 - **Bilingual** — Full English / Japanese (日本語) language toggle
 - **Multiple Themes** — Four color themes (Stark, Fern — dark purple, Himmel, Frieren); first visit follows the OS light/dark preference, and the saved theme/language apply before first paint (no flash)
 - **Responsive Layout** — Sidebar + content layout that adapts to all screen sizes
-- **Contact** — Bilingual call-to-action with email, copy-to-clipboard, LinkedIn and GitHub
+- **Contact** — Bilingual call-to-action with email, CV download (`assets/CV_Ismail_Fatih_Raihan.pdf`, no phone number), copy-to-clipboard, LinkedIn and GitHub
 - **Mobile navigation** — Compact section links under the intro on small screens
 - **Soft Background** — Theme-tinted gradient with a subtle film grain (grain is dropped on small screens)
 - **Micro-interactions** — Staggered scroll reveal, count-up stats, smooth theme/language transitions (all off under `prefers-reduced-motion`)
@@ -37,6 +37,8 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 │   └── style.css   # All styles & theme variables
 ├── js/
 │   └── main.js     # Cursor glow, language/theme toggle, scroll nav
+├── assets/
+│   └── CV_Ismail_Fatih_Raihan.pdf
 ├── robots.txt
 ├── sitemap.xml
 └── README.md
@@ -44,8 +46,8 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 
 ## Live site
 
-https://ismailfatihraihan.github.io/My-Portfolio/ (GitHub Pages, published from `main`).
-To use a custom domain again, add a `CNAME` file with the domain, point its DNS at GitHub Pages, and update the canonical/Open Graph URLs in `index.html` plus `sitemap.xml` and `robots.txt`.
+https://ifrehan.my.id/ (GitHub Pages, published from `main`; the `CNAME` file holds the custom domain, and the default address https://ismailfatihraihan.github.io/My-Portfolio/ redirects to it).
+If the domain ever changes, update `CNAME`, the canonical/Open Graph/JSON-LD URLs in `index.html`, `sitemap.xml` and `robots.txt`.
 
 ## Getting Started
 
@@ -53,13 +55,15 @@ No build tools required. Simply open `index.html` in a browser
 
 ## Adding project screenshots
 
-Each project card shows an SVG illustration as a placeholder. To use a real screenshot, put the image in `img/projects/` (WebP, about 1200×500) and replace the card's `<svg class="project-art">…</svg>` with:
+Project cards currently have no image (the illustrated placeholders were removed for now; they are in git history, commit `c81cd61`). To add a real screenshot, put the image in `img/projects/` (WebP, about 1200×500) and add this as the first child of the card's `<a class="project-card">`:
 
 ```html
-<img src="img/projects/zakat.webp" alt="Zakat Report System dashboard" width="1200" height="500" loading="lazy" />
+<div class="project-media">
+  <img src="img/projects/zakat.webp" alt="Zakat Report System dashboard" width="1200" height="500" loading="lazy" />
+</div>
 ```
 
-Then remove `aria-hidden="true"` from its `.project-media` wrapper so the alt text is read.
+The `.project-media` styles (2.4:1 frame, hover zoom) are already in `css/style.css`.
 
 ## License
 
