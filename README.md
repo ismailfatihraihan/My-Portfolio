@@ -11,7 +11,7 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 - **Bilingual** — Full English / Japanese (日本語) language toggle
 - **Multiple Themes** — Four color themes (Stark, Fern — dark purple, Himmel, Frieren); first visit follows the OS light/dark preference, and the saved theme/language apply before first paint (no flash)
 - **Responsive Layout** — Sidebar + content layout that adapts to all screen sizes
-- **Contact** — Bilingual call-to-action with email, copy-to-clipboard, LinkedIn and GitHub
+- **Contact** — Bilingual call-to-action with email, CV download (`assets/CV_Ismail_Fatih_Raihan.pdf`, no phone number), copy-to-clipboard, LinkedIn and GitHub
 - **Mobile navigation** — Compact section links under the intro on small screens
 - **Soft Background** — Theme-tinted gradient with a subtle film grain (grain is dropped on small screens)
 - **Micro-interactions** — Staggered scroll reveal, count-up stats, smooth theme/language transitions (all off under `prefers-reduced-motion`)
@@ -37,6 +37,8 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 │   └── style.css   # All styles & theme variables
 ├── js/
 │   └── main.js     # Cursor glow, language/theme toggle, scroll nav
+├── assets/
+│   └── CV_Ismail_Fatih_Raihan.pdf
 ├── robots.txt
 ├── sitemap.xml
 └── README.md
