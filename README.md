@@ -46,8 +46,8 @@ A minimal, responsive personal portfolio website showcasing my experience, proje
 
 ## Live site
 
-https://ismailfatihraihan.github.io/My-Portfolio/ (GitHub Pages, published from `main`).
-To use a custom domain again, add a `CNAME` file with the domain, point its DNS at GitHub Pages, and update the canonical/Open Graph URLs in `index.html` plus `sitemap.xml` and `robots.txt`.
+https://ifrehan.my.id/ (GitHub Pages, published from `main`; the `CNAME` file holds the custom domain, and the default address https://ismailfatihraihan.github.io/My-Portfolio/ redirects to it).
+If the domain ever changes, update `CNAME`, the canonical/Open Graph/JSON-LD URLs in `index.html`, `sitemap.xml` and `robots.txt`.
 
 ## Getting Started
 
