@@ -347,6 +347,33 @@ section {
   text-decoration: underline;
 }
 
+/* CERTIFICATIONS */
+.cert-list {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cert-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  align-items: baseline;
+}
+
+.cert-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cert-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
 /* CONTACT */
 .contact-card {
   margin-inline-start: 24px;
